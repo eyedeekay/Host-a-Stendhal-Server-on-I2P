@@ -30,6 +30,8 @@ Therefore, we'll only use one hop to set up the tunnel. Configure the tunnel wit
 
 - ![Using short tunnels](1-these-settings.png)
 
+And it's just that simple. You now have a working Stendhal server for I2P.
+
 ### Motivation
 
 It's the Friday before Christmas and CCC has been cancelled, again.
