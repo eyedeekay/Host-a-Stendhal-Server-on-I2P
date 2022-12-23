@@ -1,0 +1,337 @@
+<html>
+  <head>
+    <title>
+      How to Host a St...
+    </title>
+    <meta name="author" content="eyedeekay" />
+    <meta name="description" content="Host-a-Stendhal-Server-on-I2P" />
+    <meta name="keywords" content="main" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="showhider.css" />
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#shownav">
+        Show navigation
+      </a>
+      <div id="shownav">
+        <div id="hidenav">
+          <ul>
+            <li>
+              <a href="..">
+                Up one level ^
+              </a>
+            </li>
+            <li>
+              <a href="index.html">
+                index
+              </a>
+            </li>
+          </ul>
+          <br>
+          <a href="#hidenav">
+            Hide Navigation
+          </a>
+        </div>
+      </div>
+    </div>
+    <a id="returnhome" href="/">
+      /
+    </a>
+    <h1>
+      How to Host a Stendhal Server on I2P
+    </h1>
+    <p>
+      <a href="https://stendhalgame.org/">
+        Stendhal is a Free/Open Source Multiplayer Online Role Playing Game which is written in Java
+      </a>
+      .
+      It has a freestanding Java server which you can self host, using
+      <a href="https://stendhalgame.org/wiki/StendhalLocalhostServerOnLinux">
+        the instructions they publish on their wiki
+      </a>
+      if you want to do things the long way.
+    </p>
+    <h2>
+      Docker as the path of Least Resistance
+    </h2>
+    <p>
+      Setting up the Stendhal server in a container is the obvious way to simply manage a Stendhal server for you and your friends.
+      I started with
+      <a href="https://codeberg.org/cosmin/stendhal-server-docker">
+        this one by cosmin
+      </a>
+      , but updated it to the latest version of Stendhal.
+      You can find the updated version in the
+      <code>
+        ./stendhal-server-docker
+      </code>
+      subdirectory of this repository. To set it up, just build and run the container:
+    </p>
+    <pre><code class="language-sh">cd stendhal-server-docker
+docker build -t stendhal-server:1.41.2 .
+docker run --name=stendhal -p 32160:32160 --restart=always --volume stenhaldata:/stendhal/data stendhal-server:1.41.2
+</code></pre>
+    <p>
+      This with download and launch the 1.41.2 release of Stendhal Server and run it in, exposing the default Stendhal server port,
+      <code>
+        32160
+      </code>
+      .
+    </p>
+    <h2>
+      Setting up an I2P Standard Tunnel
+    </h2>
+    <p>
+      Go to the
+      <a href="http://127.0.0.1:7657/i2ptunnel">
+        Hidden Services Manager at http://127.0.0.1:7657/i2ptunnel
+      </a>
+      .
+      At the bottom of the &ldquo;I2P Hidden Services&rdquo; section, create a new &ldquo;Standard&rdquo; tunnel using the &ldquo;New Hidden Service&rdquo; option.
+    </p>
+    <ul>
+      <li>
+        <img src="0-new-hs.png" alt="Set up a new hidden service" />
+      </li>
+    </ul>
+    <p>
+      Since this is just a video game, it&rsquo;s more important that it performs relatively quickly than that it is resistant to attacks on it&rsquo;s anonymity.
+      Therefore, we&rsquo;ll only use one hop to set up the tunnel. Configure the tunnel with the options from the image below and click &ldquo;Save&rdquo; in the corner of the screen.
+    </p>
+    <ul>
+      <li>
+        <img src="1-these-settings.png" alt="Using short tunnels" />
+      </li>
+    </ul>
+    <h3>
+      Motivation
+    </h3>
+    <p>
+      It&rsquo;s the Friday before Christmas and CCC has been cancelled, again.
+      It&rsquo;s probably the right thing for them to do, but what a bummer.
+      I would be very sad to find out that the first CCC I attended, &ldquo;Resource Exhaustion,&rdquo; which occurred on the eve of the pandemic, was also the last in-person CCC.
+    </p>
+    <p>
+      In the past 2 years, CCC has also held a virtual conference via a piece of software called WorkAdventure.
+      WorkAdventure is a son of a gun to get working over I2P.
+      It depends on WebRTC and WebSockets, and it requires a separately-running Jitsi Meet instance which also depends on WebRTC and WebSockets.
+      There are also self-signed certificate issues to deal with before it will work, all of which have to be dealt with manually by users.
+      So even if I were able to get it to &ldquo;Work&rdquo;(I&rsquo;m not, right now, with the skills I have
+      <code>
+        *
+      </code>
+      ) the onboarding process would be offputting by design.
+    </p>
+    <p>
+      Nonetheless, I like the idea of a user having the ability to stand up a shared virtual world for themselves and their friends.
+      I&rsquo;d also like to encourage them to think about what attributes that shared space might have.
+      Virtual spaces can be synchronous or asynchronous, they can have infinite resources or they can simulate scarcity.
+      Whether or not apparent proximity in the virtual world matters depends on the mechanics of the system.
+      In WorkAdventure, for instance, typewritten chats are room-wide, but voice/video chats only happen when users move their avatars close to eachother.
+      So every year around Christmas, I set one up and make it available over I2P.
+    </p>
+    <ul>
+      <li>
+        <a href="https://h53tzppm77qya2cugxsyl7pbct7kfeo344kbpscqod6iq4xiwtiq.b32.i2p:8000/game/client/index.html">
+          BrowserQuest(Shared Environment)
+        </a>
+      </li>
+      <li>
+        <a href="http://nhmfjkbvpabqhrop7pqyi2pors4iaydlmsyvyy6npgymgobllyaq.b32.i2p/">
+          Dungeon Crawl Stone Soup(Shared Scoreboard, Resources)
+        </a>
+      </li>
+    </ul>
+    <h4>
+      <code>
+        *
+      </code>
+      The skills I
+      <em>
+        don&rsquo;t
+      </em>
+      have
+    </h4>
+    <p>
+      While I am aware of Javascript which doesn&rsquo;t run in the browser, every bit of Javascript I&rsquo;ve ever written has run in a browser.
+      I&rsquo;m also aware of Javascript trans-compilers and Javascript as a compile target, but I&rsquo;ve never written any significant amount of TypeScript.
+      Someone who has done both of those things, who is not me, would probably find it relatively straightforward to adapt Workadventure and Jitsi Meet to use the SAMv3 API.
+      This would make it much easier to set up WorkAdventure over I2P, possibly easy enough to make self-hosting WorkAdventure accessible to all I2P users.
+    </p>
+    <ul>
+      <li>
+        <a href="https://github.com/thecodingmachine/workadventure">
+          https://github.com/thecodingmachine/workadventure
+        </a>
+      </li>
+      <li>
+        <a href="https://codeberg.org/diva.exchange/i2p-sam">
+          https://codeberg.org/diva.exchange/i2p-sam
+        </a>
+      </li>
+      <li>
+        <a href="https://fosdem.org/2023/schedule/event/i2p_sam/">
+          https://fosdem.org/2023/schedule/event/i2p_sam/
+        </a>
+      </li>
+    </ul>
+    <div id="sourcecode">
+      <span id="sourcehead">
+        <strong>
+          Get the source code:
+        </strong>
+      </span>
+      <ul>
+        <li>
+          <a href="https://github.com/eyedeekay/Host-a-Stendhal-Server-on-I2P.git">
+            Source Repository: (https://github.com/eyedeekay/Host-a-Stendhal-Server-on-I2P.git)
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <a href="#show">
+        Show license
+      </a>
+      <div id="show">
+        <div id="hide">
+          <pre><code>Creative Commons Legal Code
+
+CC0 1.0 Universal
+
+    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+    LEGAL SERVICES. DISTRIBUTION OF THIS DOCUMENT DOES NOT CREATE AN
+    ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+    INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES
+    REGARDING THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS
+    PROVIDED HEREUNDER, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM
+    THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED
+    HEREUNDER.
+
+Statement of Purpose
+
+The laws of most jurisdictions throughout the world automatically confer
+exclusive Copyright and Related Rights (defined below) upon the creator
+and subsequent owner(s) (each and all, an "owner") of an original work of
+authorship and/or a database (each, a "Work").
+
+Certain owners wish to permanently relinquish those rights to a Work for
+the purpose of contributing to a commons of creative, cultural and
+scientific works ("Commons") that the public can reliably and without fear
+of later claims of infringement build upon, modify, incorporate in other
+works, reuse and redistribute as freely as possible in any form whatsoever
+and for any purposes, including without limitation commercial purposes.
+These owners may contribute to the Commons to promote the ideal of a free
+culture and the further production of creative, cultural and scientific
+works, or to gain reputation or greater distribution for their Work in
+part through the use and efforts of others.
+
+For these and/or other purposes and motivations, and without any
+expectation of additional consideration or compensation, the person
+associating CC0 with a Work (the "Affirmer"), to the extent that he or she
+is an owner of Copyright and Related Rights in the Work, voluntarily
+elects to apply CC0 to the Work and publicly distribute the Work under its
+terms, with knowledge of his or her Copyright and Related Rights in the
+Work and the meaning and intended legal effect of CC0 on those rights.
+
+1. Copyright and Related Rights. A Work made available under CC0 may be
+protected by copyright and related or neighboring rights ("Copyright and
+Related Rights"). Copyright and Related Rights include, but are not
+limited to, the following:
+
+  i. the right to reproduce, adapt, distribute, perform, display,
+     communicate, and translate a Work;
+ ii. moral rights retained by the original author(s) and/or performer(s);
+iii. publicity and privacy rights pertaining to a person's image or
+     likeness depicted in a Work;
+ iv. rights protecting against unfair competition in regards to a Work,
+     subject to the limitations in paragraph 4(a), below;
+  v. rights protecting the extraction, dissemination, use and reuse of data
+     in a Work;
+ vi. database rights (such as those arising under Directive 96/9/EC of the
+     European Parliament and of the Council of 11 March 1996 on the legal
+     protection of databases, and under any national implementation
+     thereof, including any amended or successor version of such
+     directive); and
+vii. other similar, equivalent or corresponding rights throughout the
+     world based on applicable law or treaty, and any national
+     implementations thereof.
+
+2. Waiver. To the greatest extent permitted by, but not in contravention
+of, applicable law, Affirmer hereby overtly, fully, permanently,
+irrevocably and unconditionally waives, abandons, and surrenders all of
+Affirmer's Copyright and Related Rights and associated claims and causes
+of action, whether now known or unknown (including existing as well as
+future claims and causes of action), in the Work (i) in all territories
+worldwide, (ii) for the maximum duration provided by applicable law or
+treaty (including future time extensions), (iii) in any current or future
+medium and for any number of copies, and (iv) for any purpose whatsoever,
+including without limitation commercial, advertising or promotional
+purposes (the "Waiver"). Affirmer makes the Waiver for the benefit of each
+member of the public at large and to the detriment of Affirmer's heirs and
+successors, fully intending that such Waiver shall not be subject to
+revocation, rescission, cancellation, termination, or any other legal or
+equitable action to disrupt the quiet enjoyment of the Work by the public
+as contemplated by Affirmer's express Statement of Purpose.
+
+3. Public License Fallback. Should any part of the Waiver for any reason
+be judged legally invalid or ineffective under applicable law, then the
+Waiver shall be preserved to the maximum extent permitted taking into
+account Affirmer's express Statement of Purpose. In addition, to the
+extent the Waiver is so judged Affirmer hereby grants to each affected
+person a royalty-free, non transferable, non sublicensable, non exclusive,
+irrevocable and unconditional license to exercise Affirmer's Copyright and
+Related Rights in the Work (i) in all territories worldwide, (ii) for the
+maximum duration provided by applicable law or treaty (including future
+time extensions), (iii) in any current or future medium and for any number
+of copies, and (iv) for any purpose whatsoever, including without
+limitation commercial, advertising or promotional purposes (the
+"License"). The License shall be deemed effective as of the date CC0 was
+applied by Affirmer to the Work. Should any part of the License for any
+reason be judged legally invalid or ineffective under applicable law, such
+partial invalidity or ineffectiveness shall not invalidate the remainder
+of the License, and in such case Affirmer hereby affirms that he or she
+will not (i) exercise any of his or her remaining Copyright and Related
+Rights in the Work or (ii) assert any associated claims and causes of
+action with respect to the Work, in either case contrary to Affirmer's
+express Statement of Purpose.
+
+4. Limitations and Disclaimers.
+
+ a. No trademark or patent rights held by Affirmer are waived, abandoned,
+    surrendered, licensed or otherwise affected by this document.
+ b. Affirmer offers the Work as-is and makes no representations or
+    warranties of any kind concerning the Work, express, implied,
+    statutory or otherwise, including without limitation warranties of
+    title, merchantability, fitness for a particular purpose, non
+    infringement, or the absence of latent or other defects, accuracy, or
+    the present or absence of errors, whether or not discoverable, all to
+    the greatest extent permissible under applicable law.
+ c. Affirmer disclaims responsibility for clearing rights of other persons
+    that may apply to the Work or any use thereof, including without
+    limitation any person's Copyright and Related Rights in the Work.
+    Further, Affirmer disclaims responsibility for obtaining any necessary
+    consents, permissions or other rights required for any use of the
+    Work.
+ d. Affirmer understands and acknowledges that Creative Commons is not a
+    party to this document and has no duty or obligation with respect to
+    this CC0 or use of the Work.
+</code></pre>
+          <a href="#hide">
+            Hide license
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div>
+      <a href="https://geti2p.net/">
+        <img src="i2plogo.png"></img>
+        I2P
+      </a>
+    </div>
+  </body>
+</html>
