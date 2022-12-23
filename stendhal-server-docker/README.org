@@ -1,0 +1,23 @@
+#+title: Stendhal Server Docker Image
+#+author: Cosmin Humeniuc
+#+date: <2022-07-24 Sun>
+
+This is a Docker distribution of the [[https://stendhalgame.org/][Stendhal Game]] server.
+
+** License
+
+This project is licensed under the GPLv3+.
+
+** Building
+
+To build the Docker image:
+#+BEGIN_SRC
+docker build -t cosminul/stendhal-server:1.41.2 .
+#+END_SRC
+
+** Running
+
+To run a container:
+#+BEGIN_SRC
+docker run --name stendhal -p 32160:32160 cosminul/stendhal-server:1.41.2
+#+END_SRC
