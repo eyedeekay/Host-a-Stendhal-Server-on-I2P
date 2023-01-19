@@ -13,7 +13,7 @@ You can find the updated version in the `./stendhal-server-docker` subdirectory 
 ```sh
 cd stendhal-server-docker
 docker build -t stendhal-server:1.41.2 .
-docker run --name=stendhal -p 32160:32160 --restart=always --volume stenhaldata:/stendhal/data stendhal-server:1.41.2
+docker run --name=stendhal -p 127.0.0.1:32160:32160 --restart=always --volume stenhaldata:/stendhal/data stendhal-server:1.41.2
 ```
 
 This with download and launch the 1.41.2 release of Stendhal Server and run it in, exposing the default Stendhal server port, `32160`.
